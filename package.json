@@ -1,0 +1,16 @@
+{
+  "name": "ll",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "pdfkit": "^0.15.0",
+    "qr-image": "^3.2.0",
+    "qrcode": "^1.5.3"
+  }
+}
