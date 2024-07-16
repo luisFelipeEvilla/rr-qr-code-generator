@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "start": "node index.js",
-    "dev": "node --watch index.js"
+    "install": "yarn install",
+    "dev": "node --watch api/index.js"
   },
   "dependencies": {
     "express": "^4.19.2",
