@@ -5,7 +5,6 @@
   "license": "MIT",
   "scripts": {
     "start": "node index.js",
-    "install": "yarn install",
     "dev": "node --watch api/index.js"
   },
   "dependencies": {
