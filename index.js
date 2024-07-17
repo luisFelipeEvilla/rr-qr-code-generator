@@ -89,23 +89,23 @@ app.get("/generate", async (req, res) => {
   );
   doc.pipe(res);
   // Generar los códigos QR y agregarlos al PDF
-  const imageSize = 250;
+  const imageSize = 60;
 
   for (let i = inicio; i <= fin; i++) {
     const url = `https://inventario-v2.mrconsulting.com.co/fichatecnica/generate?codigo=${i}`;
     const qrCodeImage = await qrCode.toDataURL(url);
     doc.image(qrCodeImage, doc.page.width / 2 - imageSize / 2, doc.y, {
-      fit: [250, 250],
+      fit: [imageSize, imageSize],
     });
     // doc.font("Helvetica").fontSize(12);
     // doc.text(`Producto ${i}`, 10, 10);
     doc
       .font("Helvetica-Bold")
-      .fontSize(24)
-      .text("Escanéame", 80, 315, { align: "center" });
-    doc.font("Helvetica").fontSize(20);
-    doc.text(`${cliente}`, 80, 345, { align: "center" });
-    doc.text(`${consecutivo}-${i}`, 80, 375, { align: "center" });
+      .fontSize(10)
+      .text("Escanéame", imageSize + 10 , imageSize * 2 + 10, { align: "center" });
+    doc.font("Helvetica").fontSize(10);
+    doc.text(`${cliente}`, imageSize + 120, imageSize + 30, { align: "center" });
+    doc.text(`${consecutivo}-${i}`, imageSize + 120, imageSize + 45, { align: "center" });
 
     if (i < fin) doc.addPage();
   }
