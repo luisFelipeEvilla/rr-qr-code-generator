@@ -1,12 +1,14 @@
 const express = require("express");
 const qrCode = require("qrcode");
 const PDFDocument = require("pdfkit");
+const cors = require('cors');
 
 const app = express();
 
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
+app.use(cors());
 
 app.get("/", (req, res) => {
     res.send("QR Generator service");
@@ -46,6 +48,8 @@ app.post("/", async (req, res) => {
 
   // Crear un nuevo documento PDF
   const doc = new PDFDocument();
+  doc.options.size = [400, 500];
+  // set page size
   const outputFilename = `${consecutivo}-${inicio}-${fin}.pdf`;
 
   // Stream del PDF hacia la respuesta HTTP
@@ -55,23 +59,23 @@ app.post("/", async (req, res) => {
   );
   doc.pipe(res);
   // Generar los códigos QR y agregarlos al PDF
-  const imageSize = 60;
+  const imageSize = 140;
 
   for (let i = inicio; i <= fin; i++) {
     const url = `https://inventario-v2.mrconsulting.com.co/fichatecnica/generate?codigo=${i}`;
     const qrCodeImage = await qrCode.toDataURL(url);
-    doc.image(qrCodeImage, doc.page.width / 2 - imageSize / 2, doc.y, {
+    doc.image(qrCodeImage, 0, doc.y, {
       fit: [imageSize, imageSize],
     });
     // doc.font("Helvetica").fontSize(12);
     // doc.text(`Producto ${i}`, 10, 10);
     doc
       .font("Helvetica-Bold")
-      .fontSize(10)
-      .text("Escanéame", imageSize + 10 , imageSize * 2 + 10, { align: "center" });
-    doc.font("Helvetica").fontSize(10);
-    doc.text(`${cliente}`, imageSize + 120, imageSize + 30, { align: "center" });
-    doc.text(`${consecutivo}-${i}`, imageSize + 120, imageSize + 45, { align: "center" });
+      .fontSize(12)
+      .text("Escanéame", 100, imageSize + 70);
+    doc.font("Helvetica").fontSize(12);
+    doc.text(`${cliente}`, imageSize - 30, imageSize / 2 + 40, { align: "center" });
+    doc.text(`${consecutivo}-${i}`, imageSize - 30, imageSize / 2 + 100, { align: "center" });
 
     if (i < fin) doc.addPage();
   }

@@ -8,6 +8,7 @@
     "dev": "node --watch api/index.js"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.19.2",
     "pdfkit": "^0.15.0",
     "qr-image": "^3.2.0",
